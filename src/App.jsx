@@ -83,14 +83,48 @@ let InputField = ({ formValues, formVariable, updateFormVariable }) => {
   )
 }
 
+let DropdownField = ({ formValues, formVariable, updateFormVariable, dropdownOptions }) => {
+  const handleInputChange = (event) => {
+    updateFormVariable({ formVariable: formVariable, newValue: event.target.value })
+  }
+  return(
+    <select
+      value={formValues[formVariable]}
+      onChange={handleInputChange}
+      style = {{ width: '45%', padding: '10px' }}
+    >
+      <option>Select your profession: </option>
+      {dropdownOptions.map((option, index) =>(
+        <option key={index} value={option} >
+          {option}
+        </option>
+      )
+    )}
+    </select>
+  )
+}
 
+let SubmitButton = ({ formValues, postNewAd }) => {
+  return(
+    <button
+      onClick={
+        () => {
+          console.log("yes the button works ish");
+          postNewAd(formValues)
+        }
+      }
+    >
+      Post
+    </button>
+  )
+}
 
-let InputForm = () => {
+let InputForm = ({ postNewAd }) => {
   const [formValues, setFormValues] = useState (
     {
       name: "",
       twitter: "",
-      jobType: "",
+      jobType: "plumber",
     }
   );
 
@@ -106,11 +140,17 @@ let InputForm = () => {
       <h3>Let us know what jobs you're interested in!</h3>
       <InputField formValues={formValues} formVariable="name" updateFormVariable={updateFormVariable} />
       <br />
+      <br />
       <InputField formValues={formValues} formVariable="twitter" updateFormVariable={updateFormVariable} />
+      <br />
+      <br />
+      <DropdownField formValues={formValues} formVariable="jobType" updateFormVariable={updateFormVariable} dropdownOptions={jobWords} />
+      <br />
+      <br />
+      <SubmitButton formValues={formValues} postNewAd={postNewAd} />
     </>
   )
 }
-
 
 
 /*******************************************
@@ -176,9 +216,16 @@ const AdPost = (props) => {
 
 function App() {
   const [postedAds, setPostedAds] = useState([sampleAdProps])
+  console.log("ZZZZZ",postedAds)
+
+
 
   const postNewAd = (newAdProps) => {
-    setPostedAds(prevState => prevState.unshift(newAdProps))
+    setPostedAds(prevState => ([
+      newAdProps,
+      ...prevState
+    ]));
+    console.log("postNewAd has been called with", newAdProps)
   }
 
   return (
@@ -187,12 +234,16 @@ function App() {
       <AppLogo />
       <div className="container">
         <div className ="left">
-          <InputForm />
+          <InputForm postNewAd={postNewAd}/>
 
         </div>
         <div className = 'right'>
           <h3> Latest posts: </h3>
-          <AdPost {...sampleAdProps} />
+          {postedAds.map((ad, index) => (
+            <AdPost name={ad.name} jobType={ad.jobType} twitter={ad.twitter} />
+          ))
+
+          }
         </div>
       </div>
     </>
