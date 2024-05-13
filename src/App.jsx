@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
 import pinboardLogo from '/pinboard_logo.png'
 import './App.css'
 import backupJobImage from './assets/unknown.png'
@@ -33,6 +32,7 @@ const jobList = [
 ]
 
 const getJobImage = (jobName) => {
+  console.log(`./assets/${jobName}.png`)
   try {
     return require(`./assets/${jobName}.png`);
   } catch (error) {
@@ -41,8 +41,8 @@ const getJobImage = (jobName) => {
 }
 
 
-let JobLogo = (jobType) => {
-  console.log("JobLogo called")
+let JobLogo = ({ jobType }) => {
+  console.log("JobLogo called", jobType)
   const image = getJobImage(jobType)
   const linkTarget = 'https://en.wikipedia.org/wiki/'.concat(jobType)
   const altText = [jobType].concat(" image")
@@ -63,7 +63,7 @@ let JobLogo = (jobType) => {
 
 let InputField = () => {
   return(
-    <input />
+    <input name= "hello"/>
   )
 }
 
@@ -81,6 +81,7 @@ let InputForm = () => {
 
   return(
     <>
+      <h3>Let us know what jobs you're interested in!</h3>
       <InputField />
       <InputField />
     </>
@@ -99,28 +100,12 @@ function App() {
     <AppLogo />
     <div className ="left">
       <InputForm />
-      <div>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
     </div>
     <div className = 'right'>
-      <p> jeiocmeao</p>
+      <p> This text should be in the right-hand column </p>
+      <JobLogo jobType = "gardener" />
     </div>
-    <JobLogo jobType="gardener" />
     </>
   )
 }
