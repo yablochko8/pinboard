@@ -1,8 +1,10 @@
-# React + Vite
+# Pinboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This app is to fulfil the following learning task:
 
-Currently, two official plugins are available:
+* New React project
+* Form submission
+* (Name, details etc)
+* Creates a block over to the side
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This was built using the Vite app.
