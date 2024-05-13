@@ -1,8 +1,6 @@
 import { useState } from 'react'
 import pinboardLogo from '/pinboard_logo.png'
 import './App.css'
-import backupJobImage from './assets/unknown.png'
-
 
 /*******************************************
  HEADER
@@ -23,23 +21,24 @@ console.log("App reloaded")
  JOB LIST AND IMAGES
  *******************************************/
 
+import gardener from './assets/gardener.png';
+import plumber from './assets/plumber.png';
+import electrician from './assets/electrician.png';
+import magician from './assets/magician.png';
+import backupJobImage from './assets/unknown.png'
 
-const jobList = [
-  "gardener",
-  "plumber",
-  "electrician",
-  "magician",
-]
-
-const getJobImage = (jobName) => {
-  console.log(`./assets/${jobName}.png`)
-  try {
-    return require(`./assets/${jobName}.png`);
-  } catch (error) {
-    return backupJobImage;
-  }
+const jobImages = {
+  gardener,
+  plumber,
+  electrician,
+  magician,
 }
 
+const getJobImage = (jobName) => {
+  console.log(`getJobImage called for ${jobName}`);
+  return jobImages[jobName] || backupJobImage;
+
+}
 
 let JobLogo = ({ jobType }) => {
   console.log("JobLogo called", jobType)
@@ -66,7 +65,6 @@ let InputField = () => {
     <input name= "hello"/>
   )
 }
-
 
 
 
@@ -97,7 +95,7 @@ let InputForm = () => {
 
  const sampleAdProps = {
     name: "Alex Party",
-    twitterHandle: "pinboard",
+    twitterHandle: "alexparty",
     jobType: "gardener",
     message: "Hey everyone I'm available for weeding, mowing, and pruning in the Dublin area"
  }
@@ -131,7 +129,6 @@ const AdPost = (props) => {
       lineHeight: '1.5'
     }
   }
-  console.log("AdPost component believes JobLogo is...",JobLogo({jobType: jobType}))
   return(
     <div style = {styles.card}>
       <JobLogo jobType ={jobType} />
@@ -152,9 +149,6 @@ const AdPost = (props) => {
 
 
 function App() {
-  const [count, setCount] = useState(0)
-  console.log("sampleAdProps",sampleAdProps)
-
   return (
     <>
       <AppLogo />
