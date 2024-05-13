@@ -34,6 +34,14 @@ const jobImages = {
   magician,
 }
 
+const jobWords = [
+  "gardener",
+  "plumber",
+  "electrician",
+  "magician",
+  "something else"
+]
+
 const getJobImage = (jobName) => {
   console.log(`getJobImage called for ${jobName}`);
   return jobImages[jobName] || backupJobImage;
@@ -93,7 +101,7 @@ let InputForm = () => {
  AD POSTS
  *******************************************/
 
- const sampleAdProps = {
+const sampleAdProps = {
     name: "Alex Party",
     twitterHandle: "alexparty",
     jobType: "gardener",
@@ -105,6 +113,7 @@ const AdPost = (props) => {
 
   const { name, twitterHandle, jobType } = props;
   const twitterURL = 'https://twitter.com/'.concat(twitterHandle)
+  const firstName = name.split(' ')[0]
 
   const styles = {
     card: {
@@ -132,9 +141,11 @@ const AdPost = (props) => {
   return(
     <div style = {styles.card}>
       <JobLogo jobType ={jobType} />
-      <div style = {styles.info}></div>
-      <p><strong>{name}</strong></p>
-      <p><a href={twitterURL}>@{twitterHandle}</a></p>
+      <div style = {styles.info}>
+        <p><strong>{name}</strong></p>
+        <p>{firstName} is interested in work as a <strong>{jobType}</strong>.</p>
+        <p><a href={twitterURL}>@{twitterHandle}</a></p>
+      </div>
     </div>
   )
 
@@ -151,6 +162,7 @@ const AdPost = (props) => {
 function App() {
   return (
     <>
+      <h1>Pinnnnboard</h1>
       <AppLogo />
       <div className="container">
         <div className ="left">
@@ -158,8 +170,7 @@ function App() {
 
         </div>
         <div className = 'right'>
-          <p> This text should be in the right-hand column </p>
-          <JobLogo jobType = "gardener" />
+          <h3> Latest posts: </h3>
           <AdPost {...sampleAdProps} />
         </div>
       </div>
