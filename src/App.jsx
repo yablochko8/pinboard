@@ -97,15 +97,17 @@ function App() {
 
   return (
     <>
-    <AppLogo />
-    <div className ="left">
-      <InputForm />
+      <AppLogo />
+      <div className="container">
+        <div className ="left">
+          <InputForm />
 
-    </div>
-    <div className = 'right'>
-      <p> This text should be in the right-hand column </p>
-      <JobLogo jobType = "gardener" />
-    </div>
+        </div>
+        <div className = 'right'>
+          <p> This text should be in the right-hand column </p>
+          <JobLogo jobType = "gardener" />
+        </div>
+      </div>
     </>
   )
 }
