@@ -75,7 +75,8 @@ let InputForm = () => {
     {
       name: "",
       twitterHandle: "",
-      availableFor: ""
+      jobType: "",
+      message: ""
     }
   )
 
@@ -90,10 +91,69 @@ let InputForm = () => {
 
 
 
+/*******************************************
+ AD POSTS
+ *******************************************/
+
+ const sampleAdProps = {
+    name: "Alex Party",
+    twitterHandle: "pinboard",
+    jobType: "gardener",
+    message: "Hey everyone I'm available for weeding, mowing, and pruning in the Dublin area"
+ }
+
+
+const AdPost = (props) => {
+
+  const { name, twitterHandle, jobType } = props;
+  const twitterURL = 'https://twitter.com/'.concat(twitterHandle)
+
+  const styles = {
+    card: {
+      border: '1px solid #ccc',
+      borderRadius: '8px',
+      padding: '10px',
+      maxWidth: '300px',
+      margin: '10px auto',
+      textAlign: 'center',
+      boxShadow: '0 4px 8px rgba (0, 0, 0, 0.1)'
+    },
+    avatar: {
+      width: '100px',
+      height: '100px',
+      borderRadius: '50%',
+      objectFit: 'cover'
+    },
+    info: {
+      margin: '10px 0',
+      color: '#333',
+      fontSize: '16px',
+      lineHeight: '1.5'
+    }
+  }
+  console.log("AdPost component believes JobLogo is...",JobLogo({jobType: jobType}))
+  return(
+    <div style = {styles.card}>
+      <JobLogo jobType ={jobType} />
+      <div style = {styles.info}></div>
+      <p><strong>{name}</strong></p>
+      <p><a href={twitterURL}>@{twitterHandle}</a></p>
+    </div>
+  )
+
+}
+
+
+
+
+/*******************************************
+ PULL IT ALL TOGETHER
+ *******************************************/
 
 
 function App() {
   const [count, setCount] = useState(0)
+  console.log("sampleAdProps",sampleAdProps)
 
   return (
     <>
@@ -106,6 +166,7 @@ function App() {
         <div className = 'right'>
           <p> This text should be in the right-hand column </p>
           <JobLogo jobType = "gardener" />
+          <AdPost {...sampleAdProps} />
         </div>
       </div>
     </>
