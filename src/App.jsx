@@ -68,9 +68,18 @@ let JobLogo = ({ jobType }) => {
  *******************************************/
 
 
-let InputField = () => {
+let InputField = ({ formValues, formVariable, updateFormVariable }) => {
+  const handleInputChange = (event) => {
+    updateFormVariable({ formVariable: formVariable, newValue: event.target.value })
+  }
   return(
-    <input name= "hello"/>
+    <input
+      type= "text"
+      value = {formValues[formVariable]}
+      onChange={handleInputChange}
+      placeholder={`Enter your ${formVariable} here`}
+      style = {{ width: '45%', padding: '10px'}}
+    />
   )
 }
 
@@ -80,17 +89,24 @@ let InputForm = () => {
   const [formValues, setFormValues] = useState (
     {
       name: "",
-      twitterHandle: "",
+      twitter: "",
       jobType: "",
-      message: ""
     }
-  )
+  );
+
+  const updateFormVariable = ({ formVariable, newValue }) => {
+    setFormValues(prevState => ({
+      ...prevState,
+      [formVariable]: newValue
+    }))
+  }
 
   return(
     <>
       <h3>Let us know what jobs you're interested in!</h3>
-      <InputField />
-      <InputField />
+      <InputField formValues={formValues} formVariable="name" updateFormVariable={updateFormVariable} />
+      <br />
+      <InputField formValues={formValues} formVariable="twitter" updateFormVariable={updateFormVariable} />
     </>
   )
 }
@@ -103,16 +119,15 @@ let InputForm = () => {
 
 const sampleAdProps = {
     name: "Alex Party",
-    twitterHandle: "alexparty",
+    twitter: "alexparty",
     jobType: "gardener",
-    message: "Hey everyone I'm available for weeding, mowing, and pruning in the Dublin area"
  }
 
 
 const AdPost = (props) => {
 
-  const { name, twitterHandle, jobType } = props;
-  const twitterURL = 'https://twitter.com/'.concat(twitterHandle)
+  const { name, twitter, jobType } = props;
+  const twitterURL = 'https://twitter.com/'.concat(twitter)
   const firstName = name.split(' ')[0]
 
   const styles = {
@@ -144,7 +159,7 @@ const AdPost = (props) => {
       <div style = {styles.info}>
         <p><strong>{name}</strong></p>
         <p>{firstName} is interested in work as a <strong>{jobType}</strong>.</p>
-        <p><a href={twitterURL}>@{twitterHandle}</a></p>
+        <p><a href={twitterURL}>@{twitter}</a></p>
       </div>
     </div>
   )
@@ -160,6 +175,12 @@ const AdPost = (props) => {
 
 
 function App() {
+  const [postedAds, setPostedAds] = useState([sampleAdProps])
+
+  const postNewAd = (newAdProps) => {
+    setPostedAds(prevState => prevState.unshift(newAdProps))
+  }
+
   return (
     <>
       <h1>Pinnnnboard</h1>
