@@ -206,7 +206,7 @@ let SubmitButton = ({ formValues, wipeFormValues, postNewAd }) => {
           wipeFormValues()
         }
       }
-      style = {{ backgroundColor: '#F61', color: '#FFF' }}
+      style = {{ backgroundColor: '#81F', color: '#FFF' }}
     >
       Pin it!
     </button>
