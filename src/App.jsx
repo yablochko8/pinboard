@@ -64,6 +64,93 @@ let JobLogo = ({ jobType }) => {
 
 
 /*******************************************
+ LAZY BUILD OF A LAZY BUTTON
+ *******************************************/
+
+let lazyOptionsFirstName = [
+  "Clio",
+  "Polyhymnia",
+  "Terpischore",
+  "Urania",
+  "Thalia",
+  "Melpomene",
+  "Calliope",
+  "Euterpe",
+  "Erato",
+  "Alice",
+  "Jack",
+  "James",
+  "Noah",
+  "Emma",
+  "Mia",
+  "Sofia",
+  "Maria",
+  "Nushi",
+  "Jose",
+  "Wei",
+  "Ahmed",
+  "Yan"
+]
+
+let lazyOptionsSurname = [
+  "Wang",
+  "Li",
+  "Zhang",
+  "Murphy",
+  "Kelly",
+  "Sullivan",
+  "Nielsen",
+  "Euterpe",
+  "Jensen",
+  "Hansen",
+  "Smith",
+  "Williams",
+  "Johnson",
+  "Rodriquez",
+  "Jones"
+]
+
+const fetchRandomArrayElement = (array) => array[Math.floor(Math.random() * array.length)]
+
+const createRandomName = () => {
+  const firstName = fetchRandomArrayElement(lazyOptionsFirstName);
+  const surname = fetchRandomArrayElement(lazyOptionsSurname);
+  const returnName = `${firstName} ${surname}`;
+  return(returnName)
+}
+
+const twitterifyName = (name) => name.replace(/\s+/g, "").toLowerCase().concat(Math.floor(Math.random() * 100))
+// regex fun:
+// \s matches any whitespace character (spaces, tabs, line breaks)
+// + means "one or more", so it will match consecutive whitespace characters as a single item
+// g is a flag for global search, meaning it will replace all occurrences throughout the string, not just the first one it finds
+
+
+let LazyButton = ({updateFormVariable}) => {
+  const name = createRandomName()
+  const twitter = twitterifyName(name)
+  return(
+    <button
+      onClick={
+        () => {
+          console.log("LazyButton clicked by someone lazy");
+          updateFormVariable({ formVariable: "name", newValue: name})
+          updateFormVariable({ formVariable: "twitter", newValue: twitter})
+
+        }
+      }
+      >
+        I'm lazy - please autopopulate the form
+      </button>
+  )
+ }
+
+
+
+
+
+
+/*******************************************
  INPUT FORM
  *******************************************/
 
@@ -138,6 +225,9 @@ let InputForm = ({ postNewAd }) => {
   return(
     <>
       <h3>Let us know what jobs you're interested in!</h3>
+      <LazyButton updateFormVariable={updateFormVariable} />
+      <br />
+      <br />
       <InputField formValues={formValues} formVariable="name" updateFormVariable={updateFormVariable} />
       <br />
       <br />
