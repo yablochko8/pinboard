@@ -7,15 +7,15 @@ import './App.css'
  *******************************************/
 console.log("App reloaded")
 
- let AppLogo = () => {
-  return(
-    <>
-    <a href="https://en.wikipedia.org/wiki/Main_Page" target="_blank">
-      <img src={pinboardLogo} className='logo' alt="Pinboard logo" />
-    </a>
-    </>
-  )
-}
+// let AppLogo = () => {
+//   return(
+//     <>
+//     <a href="https://en.wikipedia.org/wiki/Main_Page" target="_blank">
+//       <img src={pinboardLogo} className='logo' alt="Pinboard logo" />
+//     </a>
+//     </>
+//   )
+// }
 
 /*******************************************
  JOB LIST AND IMAGES
@@ -39,7 +39,7 @@ const jobWords = [
   "plumber",
   "electrician",
   "magician",
-  "something else"
+  "factotum"
 ]
 
 const getJobImage = (jobName) => {
@@ -161,13 +161,17 @@ let InputField = ({ formValues, formVariable, updateFormVariable }) => {
     updateFormVariable({ formVariable: formVariable, newValue: event.target.value })
   }
   return(
-    <input
-      type= "text"
-      value = {formValues[formVariable]}
-      onChange={handleInputChange}
-      placeholder={`Enter your ${formVariable} here`}
-      style = {{ width: '45%', padding: '10px'}}
-    />
+    <>
+    <div>
+      <input
+        type= "text"
+        value = {formValues[formVariable]}
+        onChange={handleInputChange}
+        placeholder={`Enter your ${formVariable.toUpperCase()} here`}
+        style = {{ width: '60%', padding: '10px'}}
+      />
+    </div>
+    </>
   )
 }
 
@@ -179,7 +183,7 @@ let DropdownField = ({ formValues, formVariable, updateFormVariable, dropdownOpt
     <select
       value={formValues[formVariable]}
       onChange={handleInputChange}
-      style = {{ width: '45%', padding: '10px' }}
+      style = {{ width: '60%', padding: '10px' }}
     >
       <option>Select your profession: </option>
       {dropdownOptions.map((option, index) =>(
@@ -192,15 +196,17 @@ let DropdownField = ({ formValues, formVariable, updateFormVariable, dropdownOpt
   )
 }
 
-let SubmitButton = ({ formValues, postNewAd }) => {
+let SubmitButton = ({ formValues, wipeFormValues, postNewAd }) => {
   return(
     <button
       onClick={
         () => {
           console.log("yes the button works ish");
-          postNewAd(formValues)
+          postNewAd(formValues);
+          wipeFormValues()
         }
       }
+      style = {{ backgroundColor: '#F61', color: '#FFF' }}
     >
       Post
     </button>
@@ -212,7 +218,7 @@ let InputForm = ({ postNewAd }) => {
     {
       name: "",
       twitter: "",
-      jobType: "plumber",
+      jobType: "",
     }
   );
 
@@ -223,6 +229,16 @@ let InputForm = ({ postNewAd }) => {
     }))
   }
 
+  const wipeFormValues = () => {
+    setFormValues(
+      {
+        name: "",
+        twitter: "",
+        jobType: "",
+      }
+    )
+  }
+
   return(
     <>
       <h3>Let us know what jobs you're interested in!</h3>
@@ -231,14 +247,12 @@ let InputForm = ({ postNewAd }) => {
       <br />
       <InputField formValues={formValues} formVariable="name" updateFormVariable={updateFormVariable} />
       <br />
-      <br />
       <InputField formValues={formValues} formVariable="twitter" updateFormVariable={updateFormVariable} />
-      <br />
       <br />
       <DropdownField formValues={formValues} formVariable="jobType" updateFormVariable={updateFormVariable} dropdownOptions={jobWords} />
       <br />
       <br />
-      <SubmitButton formValues={formValues} postNewAd={postNewAd} />
+      <SubmitButton formValues={formValues} wipeFormValues={wipeFormValues} postNewAd={postNewAd} />
     </>
   )
 }
@@ -248,12 +262,22 @@ let InputForm = ({ postNewAd }) => {
  AD POSTS
  *******************************************/
 
-const sampleAdProps = {
-    name: "Alex Party",
-    twitter: "alexparty",
-    jobType: "gardener",
- }
+const createSampleAdProps = () => {
+  const name = createRandomName()
+  const twitter = twitterifyName(name)
+  const job = fetchRandomArrayElement(jobWords)
+  return({
+    name: name,
+    twitter: twitter,
+    jobType: job
+  })
+}
+const sampleAdProps = createSampleAdProps()
 
+
+ const name = createRandomName()
+ const twitter = twitterifyName(name)
+ const job = fetchRandomArrayElement(jobWords)
 
 const AdPost = (props) => {
 
@@ -321,8 +345,8 @@ function App() {
 
   return (
     <>
-      <h1>Pinnnnboard</h1>
-      <AppLogo />
+      <h2>Pinnnnboard</h2>
+      {/* <AppLogo /> */}
       <div className="container">
         <div className ="left">
           <InputForm postNewAd={postNewAd}/>
