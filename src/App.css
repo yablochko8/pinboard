@@ -21,6 +21,7 @@
   padding: 2em;
 }
 
-.read-the-docs {
-  color: #888;
+.low-emphasis {
+  color: #999;
+  font-size: 0.6em; 
 }

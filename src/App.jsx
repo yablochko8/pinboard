@@ -3,19 +3,11 @@ import pinboardLogo from '/pinboard_logo.png'
 import './App.css'
 
 /*******************************************
- HEADER
+ OPENING
  *******************************************/
-console.log("App reloaded")
 
-// let AppLogo = () => {
-//   return(
-//     <>
-//     <a href="https://en.wikipedia.org/wiki/Main_Page" target="_blank">
-//       <img src={pinboardLogo} className='logo' alt="Pinboard logo" />
-//     </a>
-//     </>
-//   )
-// }
+ console.log("App reloaded")
+
 
 /*******************************************
  JOB LIST AND IMAGES
@@ -125,7 +117,6 @@ const twitterifyName = (name) => name.replace(/\s+/g, "").toLowerCase().concat(M
 // + means "one or more", so it will match consecutive whitespace characters as a single item
 // g is a flag for global search, meaning it will replace all occurrences throughout the string, not just the first one it finds
 
-
 let LazyButton = ({updateFormVariable}) => {
   const name = createRandomName()
   const twitter = twitterifyName(name)
@@ -147,14 +138,9 @@ let LazyButton = ({updateFormVariable}) => {
  }
 
 
-
-
-
-
 /*******************************************
  INPUT FORM
  *******************************************/
-
 
 let InputField = ({ formValues, formVariable, updateFormVariable }) => {
   const handleInputChange = (event) => {
@@ -267,6 +253,11 @@ let InputForm = ({ postNewAd }) => {
       <br />
       <br />
       <SubmitButton formValues={formValues} wipeFormValues={wipeFormValues} postNewAd={postNewAd} />
+      <br />
+      <br />
+      <p className='low-emphasis'>
+        <a href="https://github.com/yablochko8/pinboard/blob/main/src/App.jsx">view the code </a>
+      </p>
     </>
   )
 }
@@ -286,8 +277,6 @@ const createSampleAdProps = () => {
     jobType: job
   })
 }
-
-
 
 const AdPost = (props) => {
 
@@ -332,18 +321,14 @@ const AdPost = (props) => {
 }
 
 
-
-
 /*******************************************
  PULL IT ALL TOGETHER
  *******************************************/
 
-
 function App() {
   const [postedAds, setPostedAds] = useState([createSampleAdProps(), createSampleAdProps(), createSampleAdProps()])
-  console.log("ZZZZZ",postedAds)
 
-
+  console.log("See the current state of the postedAds state, an array of objects with AdPost props:", postedAds)
 
   const postNewAd = (newAdProps) => {
     setPostedAds(prevState => ([
@@ -356,18 +341,15 @@ function App() {
   return (
     <>
       <h2>Pinnnnboard</h2>
-      {/* <AppLogo /> */}
       <div className="container">
         <div className ="left">
           <InputForm postNewAd={postNewAd}/>
-
         </div>
         <div className = 'right'>
           <h3> Latest pins: </h3>
           {postedAds.map((ad, index) => (
             <AdPost key={index} name={ad.name} jobType={ad.jobType} twitter={ad.twitter} />
           ))
-
           }
         </div>
       </div>
