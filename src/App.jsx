@@ -272,12 +272,8 @@ const createSampleAdProps = () => {
     jobType: job
   })
 }
-const sampleAdProps = createSampleAdProps()
 
 
- const name = createRandomName()
- const twitter = twitterifyName(name)
- const job = fetchRandomArrayElement(jobWords)
 
 const AdPost = (props) => {
 
@@ -330,7 +326,7 @@ const AdPost = (props) => {
 
 
 function App() {
-  const [postedAds, setPostedAds] = useState([sampleAdProps])
+  const [postedAds, setPostedAds] = useState([createSampleAdProps(), createSampleAdProps(), createSampleAdProps()])
   console.log("ZZZZZ",postedAds)
 
 
