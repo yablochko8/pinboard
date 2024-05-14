@@ -129,14 +129,15 @@ const twitterifyName = (name) => name.replace(/\s+/g, "").toLowerCase().concat(M
 let LazyButton = ({updateFormVariable}) => {
   const name = createRandomName()
   const twitter = twitterifyName(name)
+  const job = fetchRandomArrayElement(jobWords)
   return(
     <button
       onClick={
         () => {
           console.log("LazyButton clicked by someone lazy");
-          updateFormVariable({ formVariable: "name", newValue: name})
-          updateFormVariable({ formVariable: "twitter", newValue: twitter})
-
+          updateFormVariable({ formVariable: "name", newValue: name })
+          updateFormVariable({ formVariable: "twitter", newValue: twitter })
+          updateFormVariable({ formVariable: "jobType", newValue: job })
         }
       }
       >
