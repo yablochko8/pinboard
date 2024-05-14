@@ -197,18 +197,32 @@ let DropdownField = ({ formValues, formVariable, updateFormVariable, dropdownOpt
 }
 
 let SubmitButton = ({ formValues, wipeFormValues, postNewAd }) => {
+  
+  const defaultButtonText = "Pin it"
+  const warningButtonText = "!! more details needed !!"
+  const [buttonText, setButtonText] = useState(defaultButtonText);
+
+  const allEmpty = Object.values(formValues).some(value => value.trim() === "");
+
+  const handleClick = () => {
+    if (allEmpty) {
+      setButtonText(warningButtonText);
+      setTimeout(() => setButtonText(defaultButtonText), 2000)
+    }
+    else {
+      console.log("SubmitButton clicked");
+      postNewAd(formValues);
+      wipeFormValues();
+      setButtonText(defaultButtonText)
+    }
+
+  }
   return(
     <button
-      onClick={
-        () => {
-          console.log("yes the button works ish");
-          postNewAd(formValues);
-          wipeFormValues()
-        }
-      }
+      onClick={handleClick}
       style = {{ backgroundColor: '#81F', color: '#FFF' }}
     >
-      Pin it!
+      {buttonText}
     </button>
   )
 }
