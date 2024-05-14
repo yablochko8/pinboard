@@ -141,7 +141,7 @@ let LazyButton = ({updateFormVariable}) => {
         }
       }
       >
-        I'm lazy - please autopopulate the form
+        I'm lazy - autopopulate the form for me
       </button>
   )
  }
@@ -208,7 +208,7 @@ let SubmitButton = ({ formValues, wipeFormValues, postNewAd }) => {
       }
       style = {{ backgroundColor: '#F61', color: '#FFF' }}
     >
-      Post
+      Pin it!
     </button>
   )
 }
@@ -349,9 +349,9 @@ function App() {
 
         </div>
         <div className = 'right'>
-          <h3> Latest posts: </h3>
+          <h3> Latest pins: </h3>
           {postedAds.map((ad, index) => (
-            <AdPost name={ad.name} jobType={ad.jobType} twitter={ad.twitter} />
+            <AdPost key={index} name={ad.name} jobType={ad.jobType} twitter={ad.twitter} />
           ))
 
           }

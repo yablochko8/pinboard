@@ -48,6 +48,10 @@ body {
   width: 50%;
   padding: 20px;
   box-sizing: border-box;
+  /* display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 10px; */
+  /* These last few rows were an attempt to let the cards appear in a grid */
 }
 
 h1 {
