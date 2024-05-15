@@ -33,11 +33,7 @@ const jobWords = [
   "factotum"
 ]
 
-const getJobImage = (jobName) => {
-  console.log(`getJobImage called for ${jobName}`);
-  return jobImages[jobName] || backupJobImage;
-
-}
+const getJobImage = (jobName) => jobImages[jobName] || backupJobImage;
 
 let JobLogo = ({ jobType }) => {
   console.log("JobLogo called", jobType)
@@ -181,13 +177,16 @@ let DropdownField = ({ formValues, formVariable, updateFormVariable, dropdownOpt
   )
 }
 
-let SubmitButton = ({ formValues, wipeFormValues, postNewAd }) => {
+let SubmitButton = ({ formValues, wipeFormValues, postNewAd, sliderRef }) => {
   
   const defaultButtonText = "Pin it"
   const warningButtonText = "!! more details needed !!"
   const [buttonText, setButtonText] = useState(defaultButtonText);
 
   const allEmpty = Object.values(formValues).some(value => value.trim() === "");
+  const goToFirstSlide = () => {
+    sliderRef.current.slickGoTo(0);
+  }
 
   const handleClick = () => {
     if (allEmpty) {
@@ -198,7 +197,9 @@ let SubmitButton = ({ formValues, wipeFormValues, postNewAd }) => {
       console.log("SubmitButton clicked");
       postNewAd(formValues);
       wipeFormValues();
-      setButtonText(defaultButtonText)
+      setButtonText(defaultButtonText);
+      goToFirstSlide();
+      console.log("sliderRef is", sliderRef)
     }
 
   }
@@ -226,7 +227,7 @@ const ContextBlock = () => (
   </>
 )
 
-let InputForm = ({ postNewAd }) => {
+let InputForm = ({ sliderRef, postNewAd }) => {
   const [formValues, setFormValues] = useState (
     {
       name: "",
@@ -264,7 +265,7 @@ let InputForm = ({ postNewAd }) => {
       <DropdownField formValues={formValues} formVariable="jobType" updateFormVariable={updateFormVariable} dropdownOptions={jobWords} />
       <br />
       <br />
-      <SubmitButton formValues={formValues} wipeFormValues={wipeFormValues} postNewAd={postNewAd} />
+      <SubmitButton formValues={formValues} wipeFormValues={wipeFormValues} postNewAd={postNewAd} sliderRef={sliderRef}/>
 
     </>
   )
@@ -350,12 +351,13 @@ const AdPost = (props) => {
  CAROUSEL WALTZ
  *******************************************/
 
-import React from 'react';
+import React, { useRef } from 'react';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 
-const AdCarousel = ({ postedAds }) => {
+
+const AdCarousel = ({ sliderRef, postedAds }) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -366,7 +368,7 @@ const AdCarousel = ({ postedAds }) => {
     // autoplaySpeed: 6000
   };
   return(
-    <Slider {...settings}>
+    <Slider ref={sliderRef} {...settings}>
       {postedAds.map((ad,index) => (
         <div key={index}>
           <AdPost name={ad.name} jobType={ad.jobType} twitter= {ad.twitter} />
@@ -398,6 +400,8 @@ function App() {
     console.log("postNewAd has been called with", newAdProps)
   }
 
+  const sliderRef = useRef(null);
+
   return (
     <>
       <div className="container">
@@ -405,10 +409,10 @@ function App() {
           <ContextBlock />
         </div>
         <div className = 'right'>
-          <InputForm postNewAd={postNewAd}/>
+          <InputForm sliderRef={sliderRef} postNewAd={postNewAd}/>
         </div>
       </div>
-      <AdCarousel postedAds={postedAds}/>
+      <AdCarousel sliderRef={sliderRef} postedAds={postedAds}/>
 
     </>
   )
