@@ -222,7 +222,7 @@ const ContextBlock = () => (
     <br />
     <br />
     <p className='low-emphasis'>
-      <a href="https://github.com/yablochko8/pinboard/blob/main/src/App.jsx">view the code </a>
+      <a href="https://github.com/yablochko8/pinboard/blob/main/src/App.jsx" target="_blank">view the code </a>
     </p>
   </>
 )
@@ -337,7 +337,7 @@ const AdPost = (props) => {
           {firstName} wants work as {aOrAn(jobType)} <strong>{jobType}</strong>.
         </p>
         <p>
-          <a href={twitterURL}>@{twitter}</a>
+          <a href={twitterURL} target="_blank">@{twitter}</a>
         </p>
       </div>
     </div>
